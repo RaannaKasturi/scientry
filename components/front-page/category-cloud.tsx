@@ -16,7 +16,7 @@ export default function CategoriesCloud() {
 
     React.useEffect(() => {
         fetch(
-            `https://raannakasturi-rexplore-cors-proxy.hf.space/fetch-feed?url=https://rexplore-backend.blogspot.com/feeds/posts/default?alt=json`
+            `https://rexplore-backend.blogspot.com/feeds/posts/default?alt=json`
         )
             .then((response) => response.json())
             .then((data) => {
