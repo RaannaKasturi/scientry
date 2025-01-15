@@ -37,7 +37,7 @@ export default function PostList({ category }: PostListProps) {
                         </div>
                         <div className="flex flex-col flex-grow text-start space-y-2">
                             <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                Category
+                                {category}
                             </Badge>
                             <div className="text-2xl line-clamp-2 break-words">
                                 Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
@@ -59,7 +59,7 @@ export default function PostList({ category }: PostListProps) {
                         </div>
                         <div className="flex flex-col flex-grow text-start space-y-2">
                             <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                Category
+                                {category}
                             </Badge>
                             <div className="text-2xl line-clamp-2 break-words">
                                 Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
@@ -81,7 +81,7 @@ export default function PostList({ category }: PostListProps) {
                         </div>
                         <div className="flex flex-col flex-grow text-start space-y-2">
                             <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                Category
+                                {category}
                             </Badge>
                             <div className="text-2xl line-clamp-2 break-words">
                                 Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
@@ -103,7 +103,7 @@ export default function PostList({ category }: PostListProps) {
                         </div>
                         <div className="flex flex-col flex-grow text-start space-y-2">
                             <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                Category
+                                {category}
                             </Badge>
                             <div className="text-2xl line-clamp-2 break-words">
                                 Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
@@ -125,7 +125,7 @@ export default function PostList({ category }: PostListProps) {
                         </div>
                         <div className="flex flex-col flex-grow text-start space-y-2">
                             <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                Category
+                                {category}
                             </Badge>
                             <div className="text-2xl line-clamp-2 break-words">
                                 Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
