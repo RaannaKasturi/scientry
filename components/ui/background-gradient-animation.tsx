@@ -63,14 +63,17 @@ export const BackgroundGradientAnimation = ({
       if (!interactiveRef.current) {
         return;
       }
-      setCurX((prevX) => prevX + (tgX - prevX) / 20);
-      setCurY((prevY) => prevY + (tgY - prevY) / 20);
-      interactiveRef.current.style.transform = `translate(${Math.round(
-        curX
-      )}px, ${Math.round(curY)}px)`;
+      const deltaX = tgX - curX;
+      const deltaY = tgY - curY;
+
+      if (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5) {
+        setCurX(curX + deltaX / 20);
+        setCurY(curY + deltaY / 20);
+        interactiveRef.current.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+      }
     }
     move();
-  });
+  }, [tgX, tgY]);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     if (interactiveRef.current) {
