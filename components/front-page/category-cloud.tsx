@@ -16,14 +16,13 @@ export default function CategoriesCloud() {
 
     React.useEffect(() => {
         fetch(
-            `https://raannakasturi-rexplore-cors-proxy.hf.space/fetch-feed?url=https://rexplore-backend.blogspot.com/feeds/posts/default?alt=json`
+            `https://raannakasturi-rexplore-cors-proxy.hf.space/fetch-feed?url=https://thescientry.blogspot.com/feeds/posts/default?alt=json`
         )
             .then((response) => response.json())
             .then((data) => {
                 if (data.status === "ok") {
                     const rawCategories = JSON.parse(data.data).feed.category;
                     if (Array.isArray(rawCategories)) {
-                        // Shuffle the array and select 12 random categories
                         const shuffledCategories = rawCategories
                             .sort(() => 0.5 - Math.random())
                             .slice(0, 15)
