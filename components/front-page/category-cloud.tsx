@@ -3,6 +3,7 @@
 import React from "react";
 import { TagCloud } from "react-tagcloud";
 import { Button } from "@/components/ui/button";
+import UseBlogger from "use-blogger";
 
 interface CategoryType {
     value: string;
@@ -15,6 +16,11 @@ export default function CategoriesCloud() {
     const [error, setError] = React.useState<string | null>(null);
 
     React.useEffect(() => {
+        const blogURL = "http://papers.raannakasturi.eu.org/";
+        const blogger = new UseBlogger({ blogUrl: blogURL, blogId: "7334486736883872826", isBrowser: true });
+        const cat = blogger.labels();
+        console.log(cat);
+
         fetch(
             `https://raannakasturi-rexplore-cors-proxy.hf.space/fetch-feed?url=https://thescientry.blogspot.com/feeds/posts/default?alt=json`
         )
