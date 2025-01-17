@@ -53,9 +53,6 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17)
-      use-blogger:
-        specifier: ^0.9.4
-        version: 0.9.4
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.2.0
@@ -1952,9 +1949,6 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
-
-  use-blogger@0.9.4:
-    resolution: {integrity: sha512-pPzKAtyNEB0CjCS80CSIQg6cEZjvHSFM+BvjwEaebSrXcWKcscycA9PC7I7qnPqxAUJKRZ3/Ew2si7GoxpZyzg==}
 
   use-callback-ref@1.3.3:
     resolution: {integrity: sha512-jQL3lRnocaFtu3V00JToYz/4QkNWswxijDaCVNZRiRTO3HQDLsdu1ZtmIUvV4yPp+rvWm5j0y0TG/S61cuijTg==}
@@ -4101,8 +4095,6 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
-
-  use-blogger@0.9.4: {}
 
   use-callback-ref@1.3.3(@types/react@19.0.7)(react@19.0.0):
     dependencies:
