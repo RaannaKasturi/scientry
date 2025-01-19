@@ -133,14 +133,14 @@ function PostData({ globalCategory }: { globalCategory: string }) {
             .then((response) => response.json())
             .then(async (data) => {
                 if (data.status === "ok") {
-                    let posts: PostListProps[] = [];
-                    let titleSet = new Set();
-                    let categorySet = new Set();
+                    const posts: PostListProps[] = [];
+                    const titleSet = new Set();
+                    const categorySet = new Set();
                     const entries: Entry[] = JSON.parse(data.data).feed.entry;
                     for (let i = 0; i < entries.length; i++) {
                         const entry = entries[i];
                         let link = "";
-                        let title = entry.title.$t;
+                        const title = entry.title.$t;
                         let category = null;
                         let image = "https://i.ibb.co/TBJqggw/Image-Not-Found.jpg";
                         if (entry.category && entry.category.length > 0) {
@@ -187,7 +187,7 @@ function PostData({ globalCategory }: { globalCategory: string }) {
                 setError("Failed to fetch data");
             })
             .finally(() => setLoading(false));
-    }, [url]);
+    }, [url, globalCategory]);
 
     if (loading) {
         return <LoadingState />;
