@@ -3,135 +3,232 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import React from "react";
 
 interface PostListProps {
-    category?: string;
+    title: string;
+    image: string;
+    category: string;
+    link: string;
 }
 
-export default function PostList({ category }: PostListProps) {
+interface Entry {
+    title: { $t: string };
+    category: { term: string }[];
+    link: { rel: string; href: string }[];
+    content?: { $t: string };
+}
+
+async function fetchImage(content: string): Promise<string> {
+    const FALLBACK_IMAGE = "https://i.ibb.co/TBJqggw/Image-Not-Found.jpg";
+    const TIMEOUT_MS = 10000;
+    try {
+        const imgRegex = /<img[^>]+id="paper_image"[^>]+src="([^"]+)"/;
+        const match = content.match(imgRegex);
+        if (!match) return FALLBACK_IMAGE;
+        const imageUrl = match[1];
+        const timeoutPromise = new Promise<string>((_, reject) => {
+            setTimeout(() => reject(new Error("Image fetch timeout")), TIMEOUT_MS);
+        });
+        const imageLoadPromise = new Promise<string>((resolve, reject) => {
+            const img = new window.Image();
+            img.onload = () => resolve(imageUrl);
+            img.onerror = () => reject(new Error("Image load failed"));
+            img.src = imageUrl;
+        });
+        return await Promise.race([imageLoadPromise, timeoutPromise]).catch(
+            () => FALLBACK_IMAGE
+        );
+    } catch (error) {
+        console.error("Error fetching image:", error);
+        return FALLBACK_IMAGE;
+    }
+}
+
+const Post = ({ shuffled_posts }: { shuffled_posts: PostListProps }) => {
     return (
-        <section id={'latest-papers'} className="bg-secondary/20 py-10">
+        <div
+            className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
+            onClick={() => {
+                window.open(shuffled_posts.link);
+            }}
+        >
+            <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
+                <Image
+                    src={shuffled_posts.image}
+                    alt={shuffled_posts.title}
+                    style={{ objectPosition: "center center", objectFit: "cover" }}
+                    fill={true}
+                    sizes="100vw"
+                    className="group-hover:scale-110 transition-transform duration-300"
+                />
+            </div>
+            <div className="flex flex-col flex-grow text-start space-y-2">
+                <Badge
+                    variant={"default"}
+                    className="w-fit"
+                    onClick={() =>
+                        window.open(`https://thescientry.blogspot.com/search/label/${shuffled_posts.category}`)
+                    }
+                >
+                    {shuffled_posts.category}
+                </Badge>
+                <div className="text-2xl line-clamp-2 break-words">{shuffled_posts.title}</div>
+            </div>
+        </div>
+    );
+};
+
+const LoadingState = () => {
+    return (
+        <>
+            {[...Array(2)].map((_, index) => (
+                <div
+                    key={index}
+                    className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
+                >
+                    <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
+                        <Image
+                            src={"https://i.ibb.co/TBJqggw/Image-Not-Found.jpg"}
+                            alt={"Loading"}
+                            style={{ objectPosition: "center center", objectFit: "cover" }}
+                            fill={true}
+                            sizes="100vw"
+                            className="group-hover:scale-110 transition-transform duration-300"
+                        />
+                    </div>
+                    <div className="flex flex-col flex-grow text-start space-y-2">
+                        <Badge variant={"default"} className="w-fit">
+                            {"Loading"}
+                        </Badge>
+                        <div className="text-2xl line-clamp-2 break-words">{"Loading Posts Please Wait. . ."}</div>
+                    </div>
+                </div>
+            ))}
+        </>
+    );
+};
+
+const ErrorState = ({ error }: { error: string }) => {
+    return (
+        <div className="text-center text-red-500">
+            <p>{`Error: ${error}`}</p>
+        </div>
+    );
+};
+
+function PostData({ globalCategory }: { globalCategory: string }) {
+    const [shuffled_posts, setPosts] = React.useState<PostListProps[]>([]);
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const [error, setError] = React.useState<string | null>(null);
+    let url = 'https://thescientry.blogspot.com/feeds/posts/default?alt=json';
+    if (globalCategory !== 'Latest Papers') {
+        url = `https://thescientry.blogspot.com/feeds/posts/default/-/${globalCategory}?alt=json`
+    }
+
+    React.useEffect(() => {
+        fetch(
+            `https://raannakasturi-rexplore-cors-proxy.hf.space/fetch-feed?url=${url}`
+        )
+            .then((response) => response.json())
+            .then(async (data) => {
+                if (data.status === "ok") {
+                    let posts: PostListProps[] = [];
+                    let titleSet = new Set();
+                    let categorySet = new Set();
+                    const entries: Entry[] = JSON.parse(data.data).feed.entry;
+                    for (let i = 0; i < entries.length; i++) {
+                        const entry = entries[i];
+                        let link = "";
+                        let title = entry.title.$t;
+                        let category = null;
+                        let image = "https://i.ibb.co/TBJqggw/Image-Not-Found.jpg";
+                        if (entry.category && entry.category.length > 0) {
+                            for (const cat of entry.category) {
+                                if (cat.term !== "ZZZZZZZZZ" && !categorySet.has(cat.term)) {
+                                    if (globalCategory === 'Latest Papers') {
+                                        categorySet.add(cat.term);
+                                    }
+                                    category = cat.term;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!category || titleSet.has(title)) continue;
+                        titleSet.add(title);
+                        try {
+                            if (entry.content?.$t) {
+                                image = await fetchImage(entry.content.$t);
+                            }
+                        } catch (error) {
+                            console.error("Image fetch failed, using default image.", error);
+                        }
+                        for (const linkObj of entry.link) {
+                            if (linkObj.rel === "alternate") {
+                                link = linkObj.href;
+                                break;
+                            }
+                        }
+                        posts.push({
+                            title: title || "Untitled",
+                            category: category || "Uncategorized",
+                            link: link || "#",
+                            image: image,
+                        });
+                    }
+                    const shuffled_posts = posts.sort(() => Math.random() - Math.random());
+                    setPosts(shuffled_posts.slice(0, 6));
+                } else {
+                    setError("No valid entries found");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                setError("Failed to fetch data");
+            })
+            .finally(() => setLoading(false));
+    }, [url]);
+
+    if (loading) {
+        return <LoadingState />;
+    }
+
+    if (error) {
+        return <ErrorState error={error} />;
+    }
+
+    return (
+        <>
+            {shuffled_posts.map((shuffled_posts, index) => (
+                <Post key={index} shuffled_posts={shuffled_posts} />
+            ))}
+        </>
+    );
+}
+
+export default function PostList({ category }: { category: string }) {
+    const formatCategoryName = (category: string) => {
+        return category
+            .replace(/-/g, " ") // Replace dashes with spaces
+            .split(" ") // Split into words
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+            .join(" "); // Join the words back with spaces
+    };
+    return (
+        <section id={"latest-papers"} className="bg-secondary/20 py-10">
             <div className="text-center justify-center items-center flex flex-col space-y-3 mx-5">
-                {/* Header Section */}
                 <div className="flex justify-between md:justify-around w-full items-center">
                     <div className="flex flex-col text-start space-y-2">
-                        <h2 className="md:text-4xl text-2xl font-bold">Latest Papers</h2>
-                        <p className="text-xl text-secondary-foreground opacity-75"> View all recently added Research Papers </p>
+                        <h2 className="md:text-4xl text-2xl font-bold">{formatCategoryName(category)}</h2>
+                        <p className="text-xl text-secondary-foreground opacity-75">
+                            View all recently added Research Papers
+                        </p>
                     </div>
-                    <Button variant={'default'} onClick={() => alert("View All")}>View All</Button>
+                    <Button variant={"default"} onClick={() => window.open('https://thescientry.blogspot.com/')}>View All</Button>
                 </div>
                 <div className="pb-5 border-gray-700 border-b-2 w-2/6"></div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-5 w-full">
-                    <div className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
-                        onClick={() => { alert('Post'); }}
-                    >
-                        <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
-                            <Image
-                                src="https://i.ibb.co/YPvgbCG/a41eb29daab8.jpg"
-                                alt="title"
-                                objectFit="cover"
-                                objectPosition="center"
-                                fill={true}
-                                className="group-hover:scale-105 transition-transform duration-300"
-                            />
-                        </div>
-                        <div className="flex flex-col flex-grow text-start space-y-2">
-                            <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                {category}
-                            </Badge>
-                            <div className="text-2xl line-clamp-2 break-words">
-                                Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
-                            </div>
-                        </div>
-                    </div>
-                    <div className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
-                        onClick={() => { alert('Post'); }}
-                    >
-                        <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
-                            <Image
-                                src="https://i.ibb.co/YPvgbCG/a41eb29daab8.jpg"
-                                alt="title"
-                                objectFit="cover"
-                                objectPosition="center"
-                                fill={true}
-                                className="group-hover:scale-105 transition-transform duration-300"
-                            />
-                        </div>
-                        <div className="flex flex-col flex-grow text-start space-y-2">
-                            <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                {category}
-                            </Badge>
-                            <div className="text-2xl line-clamp-2 break-words">
-                                Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
-                            </div>
-                        </div>
-                    </div>
-                    <div className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
-                        onClick={() => { alert('Post'); }}
-                    >
-                        <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
-                            <Image
-                                src="https://i.ibb.co/YPvgbCG/a41eb29daab8.jpg"
-                                alt="title"
-                                objectFit="cover"
-                                objectPosition="center"
-                                fill={true}
-                                className="group-hover:scale-105 transition-transform duration-300"
-                            />
-                        </div>
-                        <div className="flex flex-col flex-grow text-start space-y-2">
-                            <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                {category}
-                            </Badge>
-                            <div className="text-2xl line-clamp-2 break-words">
-                                Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
-                            </div>
-                        </div>
-                    </div>
-                    <div className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
-                        onClick={() => { alert('Post'); }}
-                    >
-                        <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
-                            <Image
-                                src="https://i.ibb.co/YPvgbCG/a41eb29daab8.jpg"
-                                alt="title"
-                                objectFit="cover"
-                                objectPosition="center"
-                                fill={true}
-                                className="group-hover:scale-105 transition-transform duration-300"
-                            />
-                        </div>
-                        <div className="flex flex-col flex-grow text-start space-y-2">
-                            <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                {category}
-                            </Badge>
-                            <div className="text-2xl line-clamp-2 break-words">
-                                Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
-                            </div>
-                        </div>
-                    </div>
-                    <div className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
-                        onClick={() => { alert('Post'); }}
-                    >
-                        <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
-                            <Image
-                                src="https://i.ibb.co/YPvgbCG/a41eb29daab8.jpg"
-                                alt="title"
-                                objectFit="cover"
-                                objectPosition="center"
-                                fill={true}
-                                className="group-hover:scale-105 transition-transform duration-300"
-                            />
-                        </div>
-                        <div className="flex flex-col flex-grow text-start space-y-2">
-                            <Badge variant={'default'} className="w-fit" onClick={() => { alert('Category'); }}>
-                                {category}
-                            </Badge>
-                            <div className="text-2xl line-clamp-2 break-words">
-                                Title kjshdbvdcsmkx, evgbdhcnjsmx gerfydu grhufeoid gtrnfoicmdp rgfedc efduns
-                            </div>
-                        </div>
-                    </div>
+                    <PostData globalCategory={formatCategoryName(category)} />
                 </div>
             </div>
         </section>

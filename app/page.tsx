@@ -8,10 +8,10 @@ import PostList from "@/components/static/post-list";
 export default function Home() {
   return (
     <div className="w-full overflow-x-hidden">
-      <Hero />
+      < Hero />
       < CategoryCloud />
       < Products />
-      < PostList category="Front Page" />
+      < PostList category="latest-papers" />
     </div>
   )
 }

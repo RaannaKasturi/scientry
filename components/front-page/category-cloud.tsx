@@ -106,7 +106,7 @@ export default function CategoriesCloud() {
                 minSize={20}
                 maxSize={35}
                 tags={categories}
-                onClick={(tag) => alert(`'${tag.value}' was selected!`)}
+                onClick={(tag) => window.open(`https://thescientry.blogspot.com/search/label/${tag.value}`, "_blank noopener noreferrer")}
             />
         </section>
     );
