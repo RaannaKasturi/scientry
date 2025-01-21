@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import React from "react";
+import { MathJax } from "better-react-mathjax";
 
 interface PostListProps {
-    title: string;
+    title: React.ReactNode;
     image: string;
     category: string;
     link: string;
@@ -46,7 +47,7 @@ const Post = ({ shuffled_posts }: { shuffled_posts: PostListProps }) => {
             <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
                 <Image
                     src={shuffled_posts.image}
-                    alt={shuffled_posts.title}
+                    alt={React.Children.toArray(shuffled_posts.title).join('')}
                     style={{ objectPosition: "center center", objectFit: "cover" }}
                     fill={true}
                     sizes="100vw"
@@ -130,7 +131,7 @@ function PostData({ globalCategory }: { globalCategory: string }) {
                     for (let i = 0; i < entries.length; i++) {
                         const entry = entries[i];
                         let link = "";
-                        const title = entry.title.$t;
+                        const title = <MathJax inline>{entry.title.$t}</MathJax>;
                         let category = null;
                         let image = "https://i.ibb.co/TBJqggw/Image-Not-Found.jpg";
                         if (entry.category && entry.category.length > 0) {
@@ -199,10 +200,10 @@ function PostData({ globalCategory }: { globalCategory: string }) {
 export default function PostList({ category }: { category: string }) {
     const formatCategoryName = (category: string) => {
         return category
-            .replace(/-/g, " ") // Replace dashes with spaces
-            .split(" ") // Split into words
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-            .join(" "); // Join the words back with spaces
+            .replace(/-/g, " ")
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
     };
     return (
         <section id={"latest-papers"} className="bg-secondary/20 py-10">
