@@ -19,26 +19,16 @@ interface Entry {
     content?: { $t: string };
 }
 
-async function fetchImage(content: string): Promise<string> {
+function fetchImage(content: string): string {
     const FALLBACK_IMAGE = "https://i.ibb.co/TBJqggw/Image-Not-Found.jpg";
-    const TIMEOUT_MS = 1000;
     try {
         const imgRegex = /<img[^>]+id="paper_image"[^>]+src="([^"]+)"/;
         const match = content.match(imgRegex);
-        if (!match) return FALLBACK_IMAGE;
-        const imageUrl = match[1];
-        const timeoutPromise = new Promise<string>((_, reject) => {
-            setTimeout(() => reject(new Error("Image fetch timeout")), TIMEOUT_MS);
-        });
-        const imageLoadPromise = new Promise<string>((resolve, reject) => {
-            const img = new window.Image();
-            img.onload = () => resolve(imageUrl);
-            img.onerror = () => reject(new Error("Image load failed"));
-            img.src = imageUrl;
-        });
-        return await Promise.race([imageLoadPromise, timeoutPromise]).catch(
-            () => FALLBACK_IMAGE
-        );
+        if (match) {
+            return match[1];
+        } else {
+            return FALLBACK_IMAGE;
+        }
     } catch (error) {
         console.error("Error fetching image:", error);
         return FALLBACK_IMAGE;
@@ -131,7 +121,7 @@ function PostData({ globalCategory }: { globalCategory: string }) {
             `https://raannakasturi-rexplore-cors-proxy.hf.space/fetch-feed?url=${url}`
         )
             .then((response) => response.json())
-            .then(async (data) => {
+            .then((data) => {
                 if (data.status === "ok") {
                     const posts: PostListProps[] = [];
                     const titleSet = new Set();
@@ -158,7 +148,7 @@ function PostData({ globalCategory }: { globalCategory: string }) {
                         titleSet.add(title);
                         try {
                             if (entry.content?.$t) {
-                                image = await fetchImage(entry.content.$t);
+                                image = fetchImage(entry.content.$t);
                             }
                         } catch (error) {
                             console.error("Image fetch failed, using default image.", error);
