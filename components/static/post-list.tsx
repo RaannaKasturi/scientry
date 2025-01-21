@@ -21,7 +21,7 @@ interface Entry {
 
 async function fetchImage(content: string): Promise<string> {
     const FALLBACK_IMAGE = "https://i.ibb.co/TBJqggw/Image-Not-Found.jpg";
-    const TIMEOUT_MS = 10000;
+    const TIMEOUT_MS = 1000;
     try {
         const imgRegex = /<img[^>]+id="paper_image"[^>]+src="([^"]+)"/;
         const match = content.match(imgRegex);
