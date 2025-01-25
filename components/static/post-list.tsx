@@ -114,9 +114,9 @@ function PostData({ globalCategory }: { globalCategory: string }) {
     React.useEffect(() => {
         setLoading(true)
         setError(null)
-        let url = "https://thescientry.blogspot.com/feeds/posts/default?alt=json"
-        if (globalCategory !== "latest-papers") {
-            url = `https://thescientry.blogspot.com/feeds/posts/default/-/${globalCategory}?alt=json`
+        let url = "https://thescientry.blogspot.com/feeds/posts/default?alt=json";
+        if (globalCategory !== "latest-papers" && globalCategory !== "Latest Papers") {
+            url = `https://thescientry.blogspot.com/feeds/posts/default/-/${globalCategory}?alt=json`;
         }
         url = encodeURI(`https://proxy.wafflehacker.io?destination=${url}`);
         fetch(`https://proxy.wafflehacker.io?destination=${url}`)
@@ -180,7 +180,6 @@ export default function PostList({ category }: { category: string }) {
             .join(" ")
     }
     const categories: string[] = [
-        "Latest Papers",
         "Astrophysics",
         "Condensed Matter",
         "General Relativity and Quantum Cosmology",
@@ -208,6 +207,7 @@ export default function PostList({ category }: { category: string }) {
         "Society",
         "Astronomy & Space",
         "Chemistry",
+        "Latest Papers",
     ]
     return (
         <section id={"latest-papers"} className="bg-secondary/20 py-10">
@@ -217,14 +217,13 @@ export default function PostList({ category }: { category: string }) {
                         <h2 className="md:text-4xl text-2xl font-bold">{formatCategoryName(selectedCategory)}</h2>
                         <Select onValueChange={(value) => setSelectedCategory(value)}>
                             <SelectTrigger className="w-fit">
-                                <SelectValue placeholder="Select Category&nbsp;&nbsp;&nbsp;" />
+                                <SelectValue placeholder="Latest Papers&nbsp;&nbsp;&nbsp;" defaultChecked={true} defaultValue={'Latest Posts'} />
                             </SelectTrigger>
                             <SelectContent>
                                 {categories.map((cat) => {
-                                    const formattedCat = cat;
                                     return (
-                                        <SelectItem key={formattedCat} value={formattedCat}>
-                                            <p>{formattedCat}&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                        <SelectItem key={cat} value={cat}>
+                                            <p>{cat}&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                         </SelectItem>
                                     );
                                 })}
