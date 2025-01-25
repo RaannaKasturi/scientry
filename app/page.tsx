@@ -1,7 +1,5 @@
 "use client";
 
-import Categories from "@/components/front-page/categories";
-import CategoryCloud from "@/components/front-page/category-cloud";
 import Hero from "@/components/front-page/hero";
 import Products from "@/components/front-page/products";
 import PostList from "@/components/static/post-list";
@@ -28,8 +26,6 @@ export default function Home() {
       <MathJaxContext version={3} config={config}>
         <MathJax hideUntilTypeset={"first"}>
           < Hero />
-          < CategoryCloud />
-          {/* < Categories /> */}
           < Products />
           < PostList category="latest-papers" />
         </MathJax>

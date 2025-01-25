@@ -126,7 +126,7 @@ const Feature = ({
             <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-10">
                 {description}
             </p>
-            < Button variant="default" className="mt-4 mx-10 z-10 w-fit" onClick={() => alert(link || "Learn More")}>{buttonText || title}</Button>
+            < Button variant="default" className="mt-4 mx-10 z-10 w-fit text-wrap" onClick={() => alert(link || "Learn More")}>{buttonText || title}</Button>
         </div>
     );
 };
