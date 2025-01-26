@@ -30,6 +30,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           enableSystem={true}
+          enableColorScheme={true}
           disableTransitionOnChange
         >
           <NextTopLoader />

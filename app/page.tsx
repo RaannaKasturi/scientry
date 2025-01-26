@@ -1,7 +1,8 @@
 "use client";
 
+import Call2Action from "@/components/front-page/cta";
+import Features from "@/components/front-page/features";
 import Hero from "@/components/front-page/hero";
-import Products from "@/components/front-page/products";
 import PostList from "@/components/static/post-list";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 
@@ -26,8 +27,9 @@ export default function Home() {
       <MathJaxContext version={3} config={config}>
         <MathJax hideUntilTypeset={"first"}>
           < Hero />
-          < Products />
+          < Features />
           < PostList category="latest-papers" />
+          < Call2Action />
         </MathJax>
       </MathJaxContext>
 
