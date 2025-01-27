@@ -21,7 +21,7 @@ export default function Hero() {
         alert(DOI);
     };
     return (
-        <section className="bg-secondary h-dvh w-full flex flex-col items-center justify-center relative">
+        <section className="bg-secondary pt-10 h-dvh w-full flex flex-col items-center justify-center relative">
             <BackgroundGradientAnimation className="absolute flex flex-col items-center justify-center h-full w-full">
                 <div className="md:pb-8 pb-5 z-10 inset-0 flex space-x-3 items-center justify-center text-white font-bold px-4 pointer-events-none text-4xl text-center md:text-6xl lg:text-7xl"> < BrainCircuitIcon size={60} className="inline-flex" /> <p>Scientry</p> </div>
                 <div className="z-10 inset-0 flex flex-col items-center justify-center text-white font-bold px-4 pointer-events-none text-2xl text-center md:text-3xl lg:text-5xl">

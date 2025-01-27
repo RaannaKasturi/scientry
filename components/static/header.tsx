@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetT
 import { Separator } from "@/components/ui/separator";
 import { useTheme } from "next-themes";
 import { useRouter } from "nextjs-toploader/app";
+import Link from "next/link";
 
 export default function Header() {
     const { setTheme } = useTheme()
@@ -15,10 +16,18 @@ export default function Header() {
             <div className="flex flex-row w-full md:justify-around justify-between items-center space-x-3">
                 <div className="md:text-3xl text-2xl fw-bold navbar-brand cursor-pointer" onClick={() => { router.push('/') }}> < BrainCircuitIcon className="inline-flex" /> Scientry</div>
                 <ul className="navbar-nav navbar hidden md:flex flex-row justify-between items-center space-x-3">
-                    <li className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end p-2 px-3 rounded" onClick={() => { router.push('/') }}>Home</li>
-                    <li className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end p-2 px-3 rounded" onClick={() => { router.push('/about') }}>About</li>
-                    <li className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end p-2 px-3 rounded" onClick={() => { router.push('/products') }}>Products</li>
-                    <li className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end p-2 px-3 rounded" onClick={() => { router.push('/papers') }}>Papers</li>
+                    <Link href="/" className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-center p-2 rounded" >
+                        <li>Home</li>
+                    </Link>
+                    <Link href="/about" className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-center p-2 rounded" >
+                        <li>About</li>
+                    </Link>
+                    <Link href="/#features" className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-center p-2 rounded" >
+                        <li>Features</li>
+                    </Link>
+                    <Link href="https://thescientry.blogspot.com/" target="_blank" rel="noreferrer noopener" className="navbar nav-link text-nowrap cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-center p-2 rounded" >
+                        <li>Research Bulletin</li>
+                    </Link>
                 </ul>
                 <div className="flex flex-row justify-between items-center space-x-3">
                     < Button variant={'outline'} size={'icon'} className="navbar border-2 border-primary" onClick={() => setTheme(theme => theme === 'dark' ? 'light' : 'dark')} >< SunMoonIcon /></Button>
@@ -33,10 +42,18 @@ export default function Header() {
                                 < SheetDescription className="pb-3">Science Simplified, Knowledge Amplified</SheetDescription>
                                 <Separator orientation={'horizontal'} />
                                 <ul className="navbar-nav navbar flex flex-col justify-between items-start pt-5">
-                                    <li className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end pr-5 p-2 rounded" onClick={() => { router.push('/') }}>Home</li>
-                                    <li className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end pr-5 p-2 rounded" onClick={() => { router.push('/about') }}>About</li>
-                                    <li className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end pr-5 p-2 rounded" onClick={() => { router.push('/products') }}>Products</li>
-                                    <li className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end pr-5 p-2 rounded" onClick={() => { router.push('/papers') }}>Papers</li>
+                                    <Link href="/" className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end pr-5 p-2 rounded" >
+                                        <li>Home</li>
+                                    </Link>
+                                    <Link href="/about" className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end pr-5 p-2 rounded" >
+                                        <li>About</li>
+                                    </Link>
+                                    <Link href="#features" scroll={false} className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end pr-5 p-2 rounded" >
+                                        <li>Features</li>
+                                    </Link>
+                                    <Link href="https://thescientry.blogspot.com/" target="_blank" rel="noreferrer noopener" className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-end pr-5 p-2 rounded" >
+                                        <li>Research Bulletin</li>
+                                    </Link>
                                 </ul>
                             </SheetHeader>
                             < SheetFooter className="flex flex-col justify-between items-center -space-y-1">

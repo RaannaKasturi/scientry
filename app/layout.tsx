@@ -5,6 +5,7 @@ import Header from "@/components/static/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import NextTopLoader from 'nextjs-toploader';
 import Footer from "@/components/static/footer";
+import BackToTop from "@/components/static/back-to-top";
 
 const fontSyne = Syne({
   weight: "variable",
@@ -37,6 +38,7 @@ export default function RootLayout({
           <NextTopLoader />
           < Header />
           {children}
+          < BackToTop />
           < Footer />
         </ThemeProvider>
       </body>

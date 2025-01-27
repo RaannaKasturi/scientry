@@ -6,6 +6,7 @@ import Image from "next/image"
 import React, { useState } from "react"
 import { MathJax } from "better-react-mathjax"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import Link from "next/link"
 
 interface PostListProps {
     title: React.ReactNode
@@ -39,36 +40,34 @@ function fetchImage(content: string): string {
 
 const Post = ({ shuffled_posts }: { shuffled_posts: PostListProps }) => {
     return (
-        <div
-            className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
-            onClick={() => {
-                window.open(shuffled_posts.link)
-            }}
-        >
-            <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
-                <Image
-                    src={shuffled_posts.image || "/placeholder.svg"}
-                    alt={React.Children.toArray(shuffled_posts.title).join("")}
-                    style={{ objectPosition: "center center", objectFit: "cover" }}
-                    fill={true}
-                    sizes="100vw"
-                    className="group-hover:scale-110 transition-transform duration-300"
-                />
+        < Link href={shuffled_posts.link} target={'_blank'} rel="noreferrer noopener" >
+            <div
+                className="group flex flex-row w-full hover:bg-primary/20 p-3 rounded-lg relative space-x-3"
+                onClick={() => {
+                    window.open(shuffled_posts.link)
+                }}
+            >
+                <div className="relative h-24 w-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
+                    <Image
+                        src={shuffled_posts.image || "/placeholder.svg"}
+                        alt={React.Children.toArray(shuffled_posts.title).join("")}
+                        style={{ objectPosition: "center center", objectFit: "cover" }}
+                        fill={true}
+                        sizes="100vw"
+                        className="group-hover:scale-110 transition-transform duration-300"
+                    />
+                </div>
+                <div className="flex flex-col flex-grow text-start space-y-2">
+                    <Badge
+                        variant={"default"}
+                        className="w-fit"
+                    >
+                        {shuffled_posts.category}
+                    </Badge>
+                    <div className="text-2xl line-clamp-2 break-words">{shuffled_posts.title}</div>
+                </div>
             </div>
-            <div className="flex flex-col flex-grow text-start space-y-2">
-                <Badge
-                    variant={"default"}
-                    className="w-fit"
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        window.open(`https://thescientry.blogspot.com/search/label/${shuffled_posts.category}`)
-                    }}
-                >
-                    {shuffled_posts.category}
-                </Badge>
-                <div className="text-2xl line-clamp-2 break-words">{shuffled_posts.title}</div>
-            </div>
-        </div>
+        </Link>
     )
 }
 
@@ -230,9 +229,11 @@ export default function PostList({ category }: { category: string }) {
                             </SelectContent>
                         </Select>
                     </div>
-                    <Button variant={"default"} onClick={() => window.open("https://thescientry.blogspot.com/")}>
-                        View All
-                    </Button>
+                    < Link href={'https://thescientry.blogspot.com/'} target={'_blank'} rel="noreferrer noopener" >
+                        <Button variant={"default"}>
+                            View All
+                        </Button>
+                    </Link>
                 </div>
                 <div className="pb-5 border-gray-700 border-b-2 w-2/6"></div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-5 w-full">
