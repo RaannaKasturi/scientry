@@ -5,12 +5,10 @@ import { BrainCircuitIcon, Menu, SunMoonIcon } from "lucide-react";
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { useTheme } from "next-themes";
-import { useRouter } from "nextjs-toploader/app";
 import Link from "next/link";
 
 export default function Header() {
     const { setTheme } = useTheme()
-    const router = useRouter()
     return (
         <section id="header" className="fixed w-full bg-white dark:bg-black text-secondary-foreground flex flex-col py-3 md:px-0 px-5 items-center navbar z-50">
             <div className="flex flex-row w-full md:justify-around justify-between items-center space-x-3">
