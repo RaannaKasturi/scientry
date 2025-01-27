@@ -7,10 +7,10 @@ import { BrainCircuitIcon } from "lucide-react";
 export default function Hero() {
     const placeholders = [
         "10.48550/ARXIV.2501.06191",
-        "10.1038/s41467-024-54838-2",
+        "https://doi.org/10.1038/s41467-024-54838-2",
         "10.1371/journal.pbio.3002907",
-        "10.1126/sciadv.ads3688",
-        "10.1371/journal.pcbi.1012664",
+        "https://doi.org/10.1126/sciadv.ads3688",
+        "doi.org/10.1371/journal.pcbi.1012664",
     ];
     let DOI: string = "";
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

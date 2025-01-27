@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "../ui/button";
 import { ChevronRightIcon, ChevronsRightIcon, ClipboardPenLineIcon, LightbulbIcon, ListTreeIcon, Minimize2Icon, NewspaperIcon, RssIcon } from "lucide-react"
 import { Separator } from "../ui/separator";
