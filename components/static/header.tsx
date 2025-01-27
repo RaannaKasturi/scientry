@@ -14,7 +14,9 @@ export default function Header() {
     return (
         <section id="header" className="fixed w-full bg-white dark:bg-black text-secondary-foreground flex flex-col py-3 md:px-0 px-5 items-center navbar z-50">
             <div className="flex flex-row w-full md:justify-around justify-between items-center space-x-3">
-                <div className="md:text-3xl text-2xl fw-bold navbar-brand cursor-pointer" onClick={() => { router.push('/') }}> < BrainCircuitIcon className="inline-flex" /> Scientry</div>
+                < Link href="/" >
+                    <div className="md:text-3xl text-2xl fw-bold navbar-brand cursor-pointer"> < BrainCircuitIcon className="inline-flex" /> Scientry</div>
+                </Link>
                 <ul className="navbar-nav navbar hidden md:flex flex-row justify-between items-center space-x-3">
                     <Link href="/" className="navbar nav-link cursor-pointer hover:underline underline-offset-2 w-full hover:scale-110 hover:bg-secondary hover:text-primary text-center p-2 rounded" >
                         <li>Home</li>
