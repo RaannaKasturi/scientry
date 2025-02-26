@@ -5,7 +5,7 @@ export default function PrivacyPolicy() {
         <section className="w-full text-secondary-foreground bg-secondary overflow-x-hidden pt-10 pb-10 justify-center md:px-40 px-10">
             <h1 className="pt-10 text-center text-4xl md:text-6xl decoration-solid decoration-2 underline underline-offset-8">Privacy Policy</h1>
             <p className="py-2 text-center"><em>This privacy policy is effective as of 2025-02-26</em></p>
-            <p className="pt-5 pb-5">This privacy policy is applicable to the Scientry app (hereinafter referred to as "Application") for mobile devices, which was developed by Binary Biology (hereinafter referred to as "Service Provider") as a an Ad Supported Freemium service. This service is provided "AS IS".</p>
+            <p className="pt-5 pb-5">This privacy policy is applicable to the Scientry app (hereinafter referred to as &quot;Application&quot;) for mobile devices, which was developed by Binary Biology (hereinafter referred to as &quot;Service Provider&quot;) as a an Ad Supported Freemium service. This service is provided &quot;AS IS&quot;.</p>
             <div className="border-gray-700 border-b-2"></div>
             <h2 className="text-2xl md:text-4xl py-5">What information does the Application obtain and how is it used?</h2>
             <ul className="list-disc pl-5 space-y-3">
@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
                 </li>
                 <li className="list-item">
                     <h3 className="text-xl md:text-2xl">Data Retention Policy, Managing Your Information</h3>
-                    <p>The Service Provider will retain User Provided data for as long as you use the Application and for a reasonable time thereafter. The Service Provider will retain Automatically Collected information for up to 24 months and thereafter may store it in aggregate. If you'd like the Service Provider to delete User Provided Data that you have provided via the Application, please contact them at <Link className="underline underline-offset-4" href={'mailto:scientry@binarybiology.top'} target={'_blank'} rel={'noreferrer noopener'}>scientry@binarybiology.top</Link> and we will respond in a reasonable time. Please note that some or all of the User Provided Data may be required in order for the Application to function properly.</p>
+                    <p>The Service Provider will retain User Provided data for as long as you use the Application and for a reasonable time thereafter. The Service Provider will retain Automatically Collected information for up to 24 months and thereafter may store it in aggregate. If you&apos;d like the Service Provider to delete User Provided Data that you have provided via the Application, please contact them at <Link className="underline underline-offset-4" href={'mailto:scientry@binarybiology.top'} target={'_blank'} rel={'noreferrer noopener'}>scientry@binarybiology.top</Link> and we will respond in a reasonable time. Please note that some or all of the User Provided Data may be required in order for the Application to function properly.</p>
                 </li>
                 <li className="list-item">
                     <h3 className="text-xl md:text-2xl">Children</h3>
@@ -64,7 +64,7 @@ export default function PrivacyPolicy() {
                 </li>
                 <li className="list-item">
                     <h3 className="text-xl md:text-2xl">Your Consent</h3>
-                    <p>By using the Application, you are giving your consent to the Service Provider processing of your information as set forth in this Privacy Policy now and as amended by us. "Processing,” means using cookies on a computer/hand held device or using or touching information in any way, including, but not limited to, collecting, storing, deleting, using, combining and disclosing information.</p>
+                    <p>By using the Application, you are giving your consent to the Service Provider processing of your information as set forth in this Privacy Policy now and as amended by us. &quot;Processing,&quot; means using cookies on a computer/hand held device or using or touching information in any way, including, but not limited to, collecting, storing, deleting, using, combining and disclosing information.</p>
                 </li>
                 <li className="list-item">
                     <h3 className="text-xl md:text-2xl">Contact us</h3>
