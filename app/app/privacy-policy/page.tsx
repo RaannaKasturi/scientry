@@ -58,6 +58,10 @@ export default function PrivacyPolicy() {
                     <h3 className="text-xl md:text-2xl">Security</h3>
                     <p>The Service Provider are concerned about safeguarding the confidentiality of your information. The Service Provider provide physical, electronic, and procedural safeguards to protect information we process and maintain. For example, we limit access to this information to authorized employees and contractors who need to know that information in order to operate, develop or improve their Application. Please be aware that, although we endeavor provide reasonable security for information we process and maintain, no security system can prevent all potential security breaches.</p>
                 </li>
+                <li className="list-item" id="delete-account">
+                    <h3 className="text-xl md:text-2xl">Delete Acconut</h3>
+                    <p>Deletion of account via web is not yet possible. To delete your account please use the &quot;Delete Account&quot; from the &quot;Settings&quot; of the Scientry App</p>
+                </li>
                 <li className="list-item">
                     <h3 className="text-xl md:text-2xl">Changes</h3>
                     <p>This Privacy Policy may be updated from time to time for any reason. The Service Provider will notify you of any changes to the Privacy Policy by updating this page with the new Privacy Policy. You are advised to consult this Privacy Policy regularly for any changes, as continued use is deemed approval of all changes.</p>
